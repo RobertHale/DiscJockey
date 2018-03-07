@@ -10,6 +10,11 @@
     tools:context="com.hale.robert.discjockey.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <FrameLayout
+        android:id="@+id/card_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></FrameLayout>
+
     <TextView
         android:id="@+id/welcome_text"
         android:layout_width="wrap_content"

@@ -4,16 +4,16 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:id="@+id/level"
+        android:id="@+id/hole"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/distance"
+        app:layout_constraintStart_toEndOf="@id/par"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/hole_list"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintHorizontal_bias="0.5">
 
@@ -22,15 +22,91 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="HOLE"
+            android:textColor="@color/colorPrimary"
             android:textSize="25dp"/>
 
         <TextView
-            android:id="@+id/levelText"
+            android:id="@+id/hole_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="1"
+            android:text="#"
+            android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="50dp"/>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/par"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toStartOf="@id/hole"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/hole_list"
+        app:layout_constraintHorizontal_chainStyle="spread">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="PAR"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25dp"/>
+
+        <TextView
+            android:id="@+id/par_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="#"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="50dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/distance"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/hole"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/hole_list"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="DIST"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25dp"/>
+
+        <TextView
+            android:id="@+id/distance_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="#"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="50dp"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/hole_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/hole"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </ListView>
 
 </android.support.constraint.ConstraintLayout>
