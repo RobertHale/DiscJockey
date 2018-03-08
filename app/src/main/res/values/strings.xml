@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Disc Jockey</string>
-    <string name="welcome_text">Welcome to Disc Jockey! To begin create a new scorecard</string>
+    <string name="welcome_text">Welcome to Disc Jockey! To create a scorecard fill out the information below then hit "create"</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

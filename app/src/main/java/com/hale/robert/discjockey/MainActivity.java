@@ -82,8 +82,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_scorecard) {
-            HoleFragment hf = new HoleFragment();
-            getSupportFragmentManager().beginTransaction().add(R.id.card_holder, hf).addToBackStack("hole").commit();
+
         } else if (id == R.id.nav_history) {
 
         } else if (id == R.id.nav_stats) {
