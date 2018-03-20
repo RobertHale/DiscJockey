@@ -1,5 +1,6 @@
 package com.hale.robert.discjockey;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -53,7 +54,6 @@ public class MainActivity extends AppCompatActivity
         final EditText name = (EditText) findViewById(R.id.user_name);
         final EditText courseName = (EditText) findViewById(R.id.course_name);
         final Button create = (Button) findViewById(R.id.create_card_button);
-        final FrameLayout temp = (FrameLayout) findViewById(R.id.temp_holder);
         final FragmentManager fragmentManager = getSupportFragmentManager();
         create.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,12 +61,13 @@ public class MainActivity extends AppCompatActivity
                 int holeCount = Integer.parseInt(numHoles.getText().toString());
                 String userName = name.getText().toString();
                 String course = courseName.getText().toString();
-                ScoreCard sc = new ScoreCard(holeCount, course);
-                ArrayList<User> au = new ArrayList<>();
-                au.add(new User(userName, 1));
-                sc.setUsers(au);
-                HoleFragment hf = HoleFragment.newInstance(sc.getHole(0));
-                fragmentManager.beginTransaction().add(R.id.temp_holder, hf).commit();
+                Intent intent = new Intent(MainActivity.this, ScoreCardActivity.class);
+                Bundle data = new Bundle();
+                data.putString("userName", userName);
+                data.putString("course", course);
+                data.putInt("numHoles", holeCount);
+                intent.putExtras(data);
+                startActivity(intent);
             }
         });
     }
@@ -111,6 +112,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_scorecard) {
 
+        } else if (id == R.id.nav_a_course){
+            Intent intent = new Intent(MainActivity.this, CourseFinderActivity.class);
+            startActivityForResult(intent, RESULT_OK);
         } else if (id == R.id.nav_history) {
 
         } else if (id == R.id.nav_stats) {

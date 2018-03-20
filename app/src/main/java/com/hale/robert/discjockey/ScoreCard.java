@@ -65,4 +65,8 @@ public class ScoreCard {
         }
         return null;
     }
+
+    public List<Hole> getHoles(){
+        return this.holes;
+    }
 }

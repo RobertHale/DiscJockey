@@ -19,6 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ScoreCardActivity"
+            android:label="Score Card"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".CourseFinderActivity"
+            android:label="Course Finder"
+            />
     </application>
 
 </manifest>
