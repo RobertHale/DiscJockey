@@ -86,4 +86,11 @@
         android:layout_height="wrap_content"
         android:text="Create ScoreCard"/>
 
+    <FrameLayout
+        android:id="@+id/temp_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </FrameLayout>
+
 </LinearLayout>

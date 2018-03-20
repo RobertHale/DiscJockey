@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/hole_row_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="NAME"
+        android:textSize="30dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/hole_row_down"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/hole_row_down"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="60"/>
+
+    <ImageButton
+        android:id="@+id/hole_row_down"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="20"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        app:layout_constraintStart_toEndOf="@id/hole_row_name"
+        app:layout_constraintEnd_toStartOf="@id/hole_row_score"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="20"/>
+
+    <TextView
+        android:id="@+id/hole_row_score"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="0"
+        android:textSize="40dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintStart_toEndOf="@id/hole_row_down"
+        app:layout_constraintEnd_toStartOf="@id/hole_row_up"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/hole_row_down"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="20"/>
+
+    <ImageButton
+        android:id="@+id/hole_row_up"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="20"
+        android:src="@drawable/ic_arrow_forward_black_24dp"
+        app:layout_constraintStart_toEndOf="@id/hole_row_score"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="20"/>
+
+</android.support.constraint.ConstraintLayout>

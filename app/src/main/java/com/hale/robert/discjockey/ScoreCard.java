@@ -34,7 +34,7 @@ public class ScoreCard {
     public void setUsers(List<User> users){
         for (User user: users) {
             for (Hole hole: this.holes) {
-                hole.addUser(user);
+                hole.addUser(user.getName());
             }
         }
     }
@@ -57,5 +57,12 @@ public class ScoreCard {
             this.holes.get(i).setDistance(dists.get(i));
         }
         return true;
+    }
+
+    public Hole getHole(int position){
+        if(position < this.holes.size()) {
+            return this.holes.get(position);
+        }
+        return null;
     }
 }
