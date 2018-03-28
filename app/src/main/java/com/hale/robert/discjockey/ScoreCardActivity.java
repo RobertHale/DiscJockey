@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,18 +30,36 @@ public class ScoreCardActivity extends AppCompatActivity {
         rv = (RecyclerView) findViewById(R.id.score_recycler);
         Intent caller = getIntent();
         Bundle data = caller.getExtras();
-        final String userName = data.getString("userName");
+        final ArrayList<String> userNames = data.getStringArrayList("users");
         final String courseName = data.getString("course");
         final int numHoles = data.getInt("numHoles");
+        ArrayList<Integer> pars = data.getIntegerArrayList("par");
+        ArrayList<Integer> dist = data.getIntegerArrayList("dist");
         ArrayList<User> users = new ArrayList<>();
-        users.add(new User(userName, 1));
+        for (int i = 0; i < userNames.size(); i++){
+            users.add(new User(userNames.get(i), 0));
+        }
         sc = new ScoreCard(numHoles, courseName);
         sc.setUsers(users);
+        sc.setPars(pars);
+        sc.setDistances(dist);
         rv.addItemDecoration(new DividerItemDecoration(ScoreCardActivity.this, LinearLayoutManager.HORIZONTAL));
         scAdapter = new ScoreCardAdapter(sc.getHoles(), getApplicationContext());
-        LinearLayoutManager HorzMan = new LinearLayoutManager(ScoreCardActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        final LinearLayoutManager HorzMan = new LinearLayoutManager(ScoreCardActivity.this, LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(HorzMan);
         rv.setAdapter(scAdapter);
+        final PagerSnapHelper helper = new PagerSnapHelper();
+        helper.attachToRecyclerView(rv);
+//        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                if (newState == rv.SCROLL_STATE_SETTLING){
+//                    HorzMan.findLastVisibleItemPosition();
+//                    rv.cen
+//                }
+//            }
+//        });
     }
 
     @Override

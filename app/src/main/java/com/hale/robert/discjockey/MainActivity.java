@@ -61,11 +61,17 @@ public class MainActivity extends AppCompatActivity
                 int holeCount = Integer.parseInt(numHoles.getText().toString());
                 String userName = name.getText().toString();
                 String course = courseName.getText().toString();
+                ArrayList<String> users = new ArrayList<>();
+                ArrayList<Integer> dist = new ArrayList<>(holeCount);
+                ArrayList<Integer> par = new ArrayList<>(holeCount);
+                users.add(userName);
                 Intent intent = new Intent(MainActivity.this, ScoreCardActivity.class);
                 Bundle data = new Bundle();
-                data.putString("userName", userName);
+                data.putStringArrayList("users", users);
                 data.putString("course", course);
                 data.putInt("numHoles", holeCount);
+                data.putIntegerArrayList("dist", dist);
+                data.putIntegerArrayList("par", par);
                 intent.putExtras(data);
                 startActivity(intent);
             }
@@ -114,6 +120,11 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_a_course){
             Intent intent = new Intent(MainActivity.this, CourseFinderActivity.class);
+            ArrayList<String> temp = new ArrayList<>();
+            temp.add("Rob");
+            temp.add("David");
+            temp.add("tim");
+            intent.putExtra("users", temp);
             startActivityForResult(intent, RESULT_OK);
         } else if (id == R.id.nav_history) {
 
