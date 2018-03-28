@@ -20,6 +20,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.amazonaws.mobile.client.AWSMobileClient;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        AWSMobileClient.getInstance().initialize(this).execute();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
