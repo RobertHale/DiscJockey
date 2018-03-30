@@ -19,7 +19,7 @@ public class ScoreCard {
         setupHoles();
     }
 
-    ScoreCard(int numHoles, String name){
+    public ScoreCard(int numHoles, String name){
         this.numberOfHoles = numHoles;
         this.courseName = name;
         setupHoles();

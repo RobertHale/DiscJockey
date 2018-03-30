@@ -15,7 +15,7 @@ public class DBConnector {
 
     private DynamoDBMapper dynamoDBMapper;
 
-    DBConnector(){
+    public DBConnector(){
         AmazonDynamoDBClient dynamoDBClient = new AmazonDynamoDBClient(AWSMobileClient.getInstance().getCredentialsProvider());
         this.dynamoDBMapper = DynamoDBMapper.builder()
                 .dynamoDBClient(dynamoDBClient)

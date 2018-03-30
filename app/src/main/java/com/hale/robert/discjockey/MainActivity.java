@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity
         final EditText name = (EditText) findViewById(R.id.user_name);
         final EditText courseName = (EditText) findViewById(R.id.course_name);
         final Button create = (Button) findViewById(R.id.create_card_button);
-        final FragmentManager fragmentManager = getSupportFragmentManager();
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
