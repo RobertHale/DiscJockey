@@ -16,7 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ArrayList<String> users;
+    private ArrayList<String> clickedUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,23 +76,21 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        final ListView userList = (ListView) findViewById(R.id.main_users);
         final EditText numHoles = (EditText) findViewById(R.id.num_holes);
-        final EditText name = (EditText) findViewById(R.id.user_name);
         final EditText courseName = (EditText) findViewById(R.id.course_name);
         final Button create = (Button) findViewById(R.id.create_card_button);
+        clickedUsers = new ArrayList<>();
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int holeCount = Integer.parseInt(numHoles.getText().toString());
-                String userName = name.getText().toString();
                 String course = courseName.getText().toString();
-                ArrayList<String> users = new ArrayList<>();
                 ArrayList<Integer> dist = new ArrayList<>(holeCount);
                 ArrayList<Integer> par = new ArrayList<>(holeCount);
-                users.add(userName);
                 Intent intent = new Intent(MainActivity.this, ScoreCardActivity.class);
                 Bundle data = new Bundle();
-                data.putStringArrayList("users", users);
+                data.putStringArrayList("users", clickedUsers);
                 data.putString("course", course);
                 data.putInt("numHoles", holeCount);
                 data.putIntegerArrayList("dist", dist);
@@ -102,6 +104,23 @@ public class MainActivity extends AppCompatActivity
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, users);
+        userList.setAdapter(adapter);
+        //set on click for users
+        userList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String user = (String)adapterView.getItemAtPosition(i);
+                CheckedTextView row = (CheckedTextView) view.findViewById(android.R.id.text1);
+                if(row.isChecked()){
+                    row.setChecked(false);
+                    clickedUsers.remove(user);
+                }else{
+                    row.setChecked(true);
+                    clickedUsers.add(user);
+                }
+            }
+        });
     }
 
     @Override
