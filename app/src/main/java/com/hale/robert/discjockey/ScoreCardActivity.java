@@ -7,11 +7,16 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.amazonaws.models.nosql.UsersDO;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by robert on 3/20/2018.
@@ -35,12 +40,8 @@ public class ScoreCardActivity extends AppCompatActivity {
         final int numHoles = data.getInt("numHoles");
         ArrayList<Integer> pars = data.getIntegerArrayList("par");
         ArrayList<Integer> dist = data.getIntegerArrayList("dist");
-        ArrayList<User> users = new ArrayList<>();
-        for (int i = 0; i < userNames.size(); i++){
-            users.add(new User(userNames.get(i), 0));
-        }
         sc = new ScoreCard(numHoles, courseName);
-        sc.setUsers(users);
+        sc.setUsers(userNames);
         sc.setPars(pars);
         sc.setDistances(dist);
         rv.addItemDecoration(new DividerItemDecoration(ScoreCardActivity.this, LinearLayoutManager.HORIZONTAL));
@@ -50,16 +51,6 @@ public class ScoreCardActivity extends AppCompatActivity {
         rv.setAdapter(scAdapter);
         final PagerSnapHelper helper = new PagerSnapHelper();
         helper.attachToRecyclerView(rv);
-//        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (newState == rv.SCROLL_STATE_SETTLING){
-//                    HorzMan.findLastVisibleItemPosition();
-//                    rv.cen
-//                }
-//            }
-//        });
     }
 
     @Override
@@ -88,6 +79,17 @@ public class ScoreCardActivity extends AppCompatActivity {
     }
 
     public void saveScoreCard(){
-
+        List<Hole> holes = sc.getHoles();
+        HashMap<String, ArrayList<Integer>> scores = sc.getScoreMap();
+        Log.d("scorecard", "saveScoreCard: " + scores);
+        DBConnector dbc = new DBConnector();
+        for (String name : scores.keySet()){
+            UsersDO user = dbc.getItem(name);
+            if (!user.getScorecards().containsKey(sc.getCourseName())){
+                user.getScorecards().put(sc.getCourseName(), new ArrayList<ArrayList<Integer>>());
+            }
+            user.getScorecards().get(sc.getCourseName()).add(scores.get(name));
+            dbc.saveUser(user);
+        }
     }
 }

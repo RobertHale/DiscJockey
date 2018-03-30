@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,11 +22,15 @@ import android.widget.FrameLayout;
 import android.widget.ListView;
 
 import com.amazonaws.mobile.client.AWSMobileClient;
+import com.amazonaws.models.nosql.UsersDO;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    ArrayList<String> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,20 @@ public class MainActivity extends AppCompatActivity
         AWSMobileClient.getInstance().initialize(this).execute();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //get users from db
+        users = new ArrayList<>();
+        final DBConnector dbc = new DBConnector();
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                List<UsersDO> userItems = dbc.getAllUsers();
+                for (UsersDO user : userItems){
+                    Log.d("database", "user: " + user.getName());
+                    users.add(user.getName());
+                }
+            }
+        });
+        th.start();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +98,11 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+        try {
+            th.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -123,11 +147,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_a_course){
             Intent intent = new Intent(MainActivity.this, CourseFinderActivity.class);
-            ArrayList<String> temp = new ArrayList<>();
-            temp.add("Rob");
-            temp.add("David");
-            temp.add("tim");
-            intent.putExtra("users", temp);
+            intent.putExtra("users", users);
             startActivityForResult(intent, RESULT_OK);
         } else if (id == R.id.nav_history) {
 

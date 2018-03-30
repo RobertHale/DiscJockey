@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "84832409524",
+    "firebase_url": "https://discjockey-66ea8.firebaseio.com",
+    "project_id": "discjockey-66ea8",
+    "storage_bucket": "discjockey-66ea8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84832409524:android:992266a31c2eeaad",
+        "android_client_info": {
+          "package_name": "com.hale.robert.discjockey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "84832409524-nqf3gsc6purli5nml1ip2gm9t8qahhb1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hale.robert.discjockey",
+            "certificate_hash": "687872a1ece955ddf37ec9b5f8446609e97b31df"
+          }
+        },
+        {
+          "client_id": "84832409524-qrbcjtsrlb7hfu2u5jegcj0j6a0ldkj9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAHvWJmmjFWHBLzWOK2tfos_qGSL4mZIU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "84832409524-qrbcjtsrlb7hfu2u5jegcj0j6a0ldkj9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

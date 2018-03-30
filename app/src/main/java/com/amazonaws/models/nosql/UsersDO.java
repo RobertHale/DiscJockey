@@ -7,6 +7,7 @@ import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBIndexRan
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBRangeKey;
 import com.amazonaws.mobileconnectors.dynamodbv2.dynamodbmapper.DynamoDBTable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
 
 public class UsersDO {
     private String _name;
-    private Map<String, String> _scorecards;
+    private Map<String, ArrayList<ArrayList<Integer>>> _scorecards;
 
     @DynamoDBHashKey(attributeName = "name")
     @DynamoDBAttribute(attributeName = "name")
@@ -27,11 +28,11 @@ public class UsersDO {
         this._name = _name;
     }
     @DynamoDBAttribute(attributeName = "scorecards")
-    public Map<String, String> getScorecards() {
+    public Map<String, ArrayList<ArrayList<Integer>>> getScorecards() {
         return _scorecards;
     }
 
-    public void setScorecards(final Map<String, String> _scorecards) {
+    public void setScorecards(final Map<String, ArrayList<ArrayList<Integer>>> _scorecards) {
         this._scorecards = _scorecards;
     }
 

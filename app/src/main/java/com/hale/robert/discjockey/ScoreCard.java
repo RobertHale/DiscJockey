@@ -1,6 +1,7 @@
 package com.hale.robert.discjockey;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ public class ScoreCard {
         setupHoles();
     }
 
-    public ScoreCard(int numHoles, String name){
+    ScoreCard(int numHoles, String name){
         this.numberOfHoles = numHoles;
         this.courseName = name;
         setupHoles();
@@ -31,10 +32,10 @@ public class ScoreCard {
         }
     }
 
-    public void setUsers(List<User> users){
-        for (User user: users) {
+    public void setUsers(List<String> users){
+        for (String user: users) {
             for (Hole hole: this.holes) {
-                hole.addUser(user.getName());
+                hole.addUser(user);
             }
         }
     }
@@ -59,7 +60,7 @@ public class ScoreCard {
         return true;
     }
 
-    public Hole getHole(int position){
+    private Hole getHole(int position){
         if(position < this.holes.size()) {
             return this.holes.get(position);
         }
@@ -68,5 +69,26 @@ public class ScoreCard {
 
     public List<Hole> getHoles(){
         return this.holes;
+    }
+
+    public String getCourseName(){
+        return this.courseName;
+    }
+
+    public HashMap<String, ArrayList<Integer>> getScoreMap(){
+        HashMap<String, ArrayList<Integer>> map = new HashMap<>();
+        Hole curHole = getHole(0);
+        for(Hole.UserScore us : curHole.getUserScores()){
+            ArrayList<Integer> score = new ArrayList<>();
+            score.add(us.score - curHole.getPar());
+            map.put(us.user, score);
+        }
+        for (int i = 1; i < this.holes.size(); i++) {
+            curHole = getHole(i);
+            for (Hole.UserScore us : curHole.getUserScores()){
+                map.get(us.user).add(us.score - curHole.getPar());
+            }
+        }
+        return map;
     }
 }
