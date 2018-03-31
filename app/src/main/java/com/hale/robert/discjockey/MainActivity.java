@@ -33,8 +33,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private static final int COURSE_FINDER_ACT = 999;
+    private static final int ADD_REMOVE_ACT = 998;
     ArrayList<String> users;
     private ArrayList<String> clickedUsers;
+    private ListView userList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +61,6 @@ public class MainActivity extends AppCompatActivity
         });
         th.start();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -76,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        final ListView userList = (ListView) findViewById(R.id.main_users);
+        userList = (ListView) findViewById(R.id.main_users);
         final EditText numHoles = (EditText) findViewById(R.id.num_holes);
         final EditText courseName = (EditText) findViewById(R.id.course_name);
         final Button create = (Button) findViewById(R.id.create_card_button);
@@ -150,6 +144,8 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }else if(id == R.id.add_user_option){
+            startActivityForResult(new Intent(MainActivity.this, AddRemovePlayerActivity.class), ADD_REMOVE_ACT);
         }
 
         return super.onOptionsItemSelected(item);
@@ -166,7 +162,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_a_course){
             Intent intent = new Intent(MainActivity.this, CourseFinderActivity.class);
             intent.putExtra("users", users);
-            startActivityForResult(intent, RESULT_OK);
+            startActivityForResult(intent, COURSE_FINDER_ACT);
         } else if (id == R.id.nav_history) {
 
         } else if (id == R.id.nav_stats) {
@@ -180,5 +176,32 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        users.clear();
+        if (requestCode == ADD_REMOVE_ACT){
+            Thread th = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    DBConnector dbc = new DBConnector();
+                    List<UsersDO> userItems = dbc.getAllUsers();
+                    for (UsersDO user : userItems){
+                        Log.d("database", "user: " + user.getName());
+                        users.add(user.getName());
+                    }
+                }
+            });
+            th.start();
+            try {
+                th.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, users);
+            userList.setAdapter(adapter);
+        }
     }
 }

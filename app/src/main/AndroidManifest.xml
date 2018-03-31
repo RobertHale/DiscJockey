@@ -29,6 +29,7 @@
         <activity android:name=".CourseFinderActivity"
             android:label="Course Finder"
             />
+        <activity android:name=".AddRemovePlayerActivity" />
     </application>
 
 </manifest>

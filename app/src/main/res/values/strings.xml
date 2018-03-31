@@ -4,5 +4,6 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="find_a_course_help">Let\'s find your course! Select users and enter name of course to get started</string>
+    <string name="add_remove_help">To add a player, enter name below then hit enter.  To remove a player, contact creator of app and ask for removal of player.</string>
     <string name="action_settings">Settings</string>
 </resources>

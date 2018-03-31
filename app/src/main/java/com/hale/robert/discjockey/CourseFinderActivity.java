@@ -89,10 +89,15 @@ public class CourseFinderActivity extends AppCompatActivity implements JsoupFetc
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 SearchResultCourse course = (SearchResultCourse) adapterView.getItemAtPosition(i);
-                Snackbar.make(view, "Sit back as we create your scorecard", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                clikcedCourse = course;
-                new CourseCreator(CourseFinderActivity.this, course.getUrl().toString());
+                if(clickedUsers.size() > 0) {
+                    Snackbar.make(view, "Sit back as we create your scorecard", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    clikcedCourse = course;
+                    new CourseCreator(CourseFinderActivity.this, course.getUrl().toString());
+                }else{
+                    Snackbar.make(view, "Please select some Players to begin", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
     }

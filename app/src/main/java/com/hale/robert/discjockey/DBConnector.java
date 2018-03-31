@@ -38,7 +38,6 @@ public class DBConnector {
             @Override
             public void run() {
                 users[0] = dynamoDBMapper.load(UsersDO.class, name);
-                Log.d("database", "run: user " + users[0].getName());
             }
         };
         Thread thread = new Thread(runnable);
