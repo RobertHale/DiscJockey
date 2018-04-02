@@ -22,6 +22,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     compile ('com.amazonaws:aws-android-sdk-mobile-client:2.6.+@aar') { transitive = true; }
     compile 'com.amazonaws:aws-android-sdk-ddb-mapper:2.6.+'
+    compile 'com.android.support:support-v4:27.+'
+    compile ('com.amazonaws:aws-android-sdk-auth-userpools:2.6.+@aar') { transitive = true; }
     implementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'com.android.support:support-v4:27.1.0'
     implementation 'com.android.support:design:27.1.0'

@@ -78,19 +78,23 @@ public class MainActivity extends AppCompatActivity
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int holeCount = Integer.parseInt(numHoles.getText().toString());
-                String course = courseName.getText().toString();
-                ArrayList<Integer> dist = new ArrayList<>(holeCount);
-                ArrayList<Integer> par = new ArrayList<>(holeCount);
-                Intent intent = new Intent(MainActivity.this, ScoreCardActivity.class);
-                Bundle data = new Bundle();
-                data.putStringArrayList("users", clickedUsers);
-                data.putString("course", course);
-                data.putInt("numHoles", holeCount);
-                data.putIntegerArrayList("dist", dist);
-                data.putIntegerArrayList("par", par);
-                intent.putExtras(data);
-                startActivity(intent);
+                if (clickedUsers.size() > 0) {
+                    int holeCount = Integer.parseInt(numHoles.getText().toString());
+                    String course = courseName.getText().toString();
+                    ArrayList<Integer> dist = new ArrayList<>(holeCount);
+                    ArrayList<Integer> par = new ArrayList<>(holeCount);
+                    Intent intent = new Intent(MainActivity.this, ScoreCardActivity.class);
+                    Bundle data = new Bundle();
+                    data.putStringArrayList("users", clickedUsers);
+                    data.putString("course", course);
+                    data.putInt("numHoles", holeCount);
+                    data.putIntegerArrayList("dist", dist);
+                    data.putIntegerArrayList("par", par);
+                    intent.putExtras(data);
+                    startActivity(intent);
+                }else{
+                    showSnack("Please add users to create course.");
+                }
             }
         });
         try {
@@ -203,5 +207,21 @@ public class MainActivity extends AppCompatActivity
             final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, users);
             userList.setAdapter(adapter);
         }
+    }
+
+    private void showSnack(final String text) {
+        Thread th = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                });
+            }
+        });
+        th.start();
     }
 }

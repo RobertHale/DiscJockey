@@ -54,8 +54,7 @@ public class CourseFinderActivity extends AppCompatActivity implements JsoupFetc
             public void onClick(View view) {
                 String name = searchName.getText().toString().toLowerCase();
                 if(name.length() == 0){
-                    Snackbar.make(view, "Please enter a name", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    showSnack("Please enter a name");
                     return;
                 }
                 new JsoupFetch(CourseFinderActivity.this, getApplicationContext(), "http://www.discasaurus.com/search/node/" + name);
@@ -95,8 +94,7 @@ public class CourseFinderActivity extends AppCompatActivity implements JsoupFetc
                     clikcedCourse = course;
                     new CourseCreator(CourseFinderActivity.this, course.getUrl().toString());
                 }else{
-                    Snackbar.make(view, "Please select some Players to begin", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    showSnack("Please select some Players to begin");
                 }
             }
         });
