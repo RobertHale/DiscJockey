@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.amazonaws.models.nosql.CoursesDO;
 import com.amazonaws.models.nosql.UsersDO;
 
 import java.util.ArrayList;
@@ -90,6 +91,13 @@ public class ScoreCardActivity extends AppCompatActivity {
             }
             user.getScorecards().get(sc.getCourseName()).add(scores.get(name));
             dbc.saveUser(user);
+        }
+        if(dbc.getCourse(sc.getCourseName()) == null){
+            CoursesDO course = new CoursesDO();
+            course.setName(sc.getCourseName());
+            course.setDistances(sc.getDists());
+            course.setPars(sc.getPars());
+            dbc.saveCourse(course);
         }
     }
 }

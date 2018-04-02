@@ -91,4 +91,20 @@ public class ScoreCard {
         }
         return map;
     }
+
+    public List<Integer> getPars(){
+        ArrayList<Integer> res = new ArrayList<>();
+        for (Hole hole : holes){
+            res.add(hole.getPar());
+        }
+        return res;
+    }
+
+    public List<Integer> getDists(){
+        ArrayList<Integer> res = new ArrayList<>();
+        for (Hole hole : holes){
+            res.add(hole.getDistance());
+        }
+        return res;
+    }
 }
