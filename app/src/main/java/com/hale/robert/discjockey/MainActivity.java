@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("users", users);
             startActivityForResult(intent, COURSE_FINDER_ACT);
         } else if (id == R.id.nav_history) {
-
+            startActivityForResult(new Intent(MainActivity.this, HistoryActivity.class), 500);
         } else if (id == R.id.nav_stats) {
 
         } else if (id == R.id.nav_share) {
@@ -185,8 +185,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        users.clear();
         if (requestCode == ADD_REMOVE_ACT){
+            users.clear();
             Thread th = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity
             }
             final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, users);
             userList.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
     }
 
