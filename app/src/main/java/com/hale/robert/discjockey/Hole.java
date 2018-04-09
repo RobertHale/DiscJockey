@@ -103,7 +103,9 @@ public class Hole implements Parcelable{
             }
         }
         //set default to par
-        this.userScores.add(new UserScore(user));
+        UserScore us = new UserScore(user);
+        us.score = this.par;
+        this.userScores.add(us);
         return true;
     }
 

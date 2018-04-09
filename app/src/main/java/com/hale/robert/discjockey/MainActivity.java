@@ -168,7 +168,9 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("users", users);
             startActivityForResult(intent, COURSE_FINDER_ACT);
         } else if (id == R.id.nav_history) {
-            startActivityForResult(new Intent(MainActivity.this, HistoryActivity.class), 500);
+            Intent intent = new Intent(MainActivity.this, HistoryActivity.class);
+            intent.putStringArrayListExtra("users", users);
+            startActivityForResult(intent, 500);
         } else if (id == R.id.nav_stats) {
 
         } else if (id == R.id.nav_share) {

@@ -42,8 +42,8 @@ public class ScoreCardActivity extends AppCompatActivity {
         ArrayList<Integer> pars = data.getIntegerArrayList("par");
         ArrayList<Integer> dist = data.getIntegerArrayList("dist");
         sc = new ScoreCard(numHoles, courseName);
-        sc.setUsers(userNames);
         sc.setPars(pars);
+        sc.setUsers(userNames);
         sc.setDistances(dist);
         rv.addItemDecoration(new DividerItemDecoration(ScoreCardActivity.this, LinearLayoutManager.HORIZONTAL));
         scAdapter = new ScoreCardAdapter(sc.getHoles(), getApplicationContext());
