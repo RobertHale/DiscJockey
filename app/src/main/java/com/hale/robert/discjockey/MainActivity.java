@@ -172,7 +172,9 @@ public class MainActivity extends AppCompatActivity
             intent.putStringArrayListExtra("users", users);
             startActivityForResult(intent, 500);
         } else if (id == R.id.nav_stats) {
-
+            Intent intent = new Intent(MainActivity.this, StatsActivity.class);
+            intent.putStringArrayListExtra("users", users);
+            startActivityForResult(intent, 501);
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_friends) {

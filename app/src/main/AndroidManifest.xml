@@ -31,6 +31,7 @@
             />
         <activity android:name=".AddRemovePlayerActivity" />
         <activity android:name=".HistoryActivity" />
+        <activity android:name=".StatsActivity" />
     </application>
 
 </manifest>
