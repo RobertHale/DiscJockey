@@ -39,9 +39,9 @@ public class HistoryAdapter extends ArrayAdapter<HistoryItem> {
         assert hi != null;
         assert name != null;
         Log.d("history", "BindView: " + name.getText());
-        Log.d("history", "BindView: " + hi.getCourseName() + " " + hi.getScore());
+        Log.d("history", "BindView: " + hi.getCourseName() + " " + hi.getTotalScore());
         name.setText(hi.getCourseName());
-        score.setText(String.valueOf(hi.getScore()));
+        score.setText(String.valueOf(hi.getTotalScore()));
         return theView;
     }
 }

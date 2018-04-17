@@ -59,14 +59,7 @@ public class HistoryActivity extends AppCompatActivity {
         ArrayList<HistoryItem> items = new ArrayList<>();
         for(String course : user.getScorecards().keySet()){
             for(List<Integer> scores : user.getScorecards().get(course)){
-                HistoryItem hi = new HistoryItem();
-                hi.setCourseName(course);
-                int sum = 0;
-                for(int s : scores){
-                    sum += s;
-                }
-                hi.setScore(sum);
-                items.add(hi);
+                items.add(new HistoryItem(course, scores));
             }
         }
         return items;
