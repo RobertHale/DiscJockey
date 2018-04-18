@@ -27,7 +27,9 @@
 
             <View
                 android:layout_width="fill_parent"
-                android:layout_height="2dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@color/colorPrimary"/>
 
             <com.jjoe64.graphview.GraphView
@@ -37,7 +39,9 @@
 
             <View
                 android:layout_width="fill_parent"
-                android:layout_height="2dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@color/colorPrimary"/>
 
             <Spinner
@@ -45,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:gravity="center"
                 android:background="@color/white"/>
 
             <com.jjoe64.graphview.GraphView
@@ -54,7 +59,21 @@
 
             <View
                 android:layout_width="fill_parent"
-                android:layout_height="2dp"
+                android:layout_height="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/colorPrimary"/>
+
+            <com.jjoe64.graphview.GraphView
+                android:layout_width="match_parent"
+                android:layout_height="200dip"
+                android:id="@+id/dist_per_course_graph"/>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:background="@color/colorPrimary"/>
 
         </LinearLayout>

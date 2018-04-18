@@ -1,8 +1,10 @@
 package com.hale.robert.discjockey;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseIntArray;
@@ -15,7 +17,10 @@ import android.widget.Toast;
 import com.amazonaws.models.nosql.CoursesDO;
 import com.amazonaws.models.nosql.UsersDO;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.LabelFormatter;
 import com.jjoe64.graphview.LegendRenderer;
+import com.jjoe64.graphview.Viewport;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -36,6 +41,7 @@ public class StatsActivity extends AppCompatActivity {
     GraphView avgPerHole;
     GraphView avgPerCourse;
     GraphView comparisonGraph;
+    GraphView distPerCourse;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +52,7 @@ public class StatsActivity extends AppCompatActivity {
         avgPerHole = (GraphView) findViewById(R.id.avg_per_hole_score);
         avgPerCourse = (GraphView) findViewById(R.id.avg_per_course_score);
         comparisonGraph = (GraphView) findViewById(R.id.course_comparison_graph);
+        distPerCourse = (GraphView) findViewById(R.id.dist_per_course_graph);
         Spinner spinner = (Spinner) findViewById(R.id.stats_spinner);
         comparisonSpinner = (Spinner) findViewById(R.id.comparison_spinner);
         comparisonAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.user_spinner_item);
@@ -56,6 +63,9 @@ public class StatsActivity extends AppCompatActivity {
         dbc = new DBConnector();
         avgPerHole.setTitle("Average score per hole compared to par");
         avgPerCourse.setTitle("Average score per course compared to par");
+        comparisonGraph.setTitle("Score per hole compared to par");
+        distPerCourse.setTitle("Total distance traveled per course");
+        distPerCourse.getGridLabelRenderer().setVerticalAxisTitle("Feet");
         switchUsers(0);
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -89,11 +99,11 @@ public class StatsActivity extends AppCompatActivity {
                 for(HistoryItem item : scores){
                         relScores.put(item.getTotalScore(), relScores.get(item.getTotalScore()) + 1);
                 }
-                final LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
+                final BarGraphSeries<DataPoint> series = new BarGraphSeries<>();
                 for (int i = 0; i < relScores.size(); i++){
                     series.appendData(new DataPoint(relScores.keyAt(i), relScores.valueAt(i)), true, 36);
                 }
-                series.setDrawDataPoints(true);
+                series.setSpacing(15);
                 series.setOnDataPointTapListener(new OnDataPointTapListener() {
                     @Override
                     public void onTap(Series series, DataPointInterface dataPoint) {
@@ -127,6 +137,7 @@ public class StatsActivity extends AppCompatActivity {
                     series.appendData(new DataPoint(relScores.keyAt(i), relScores.valueAt(i)), true, 36);
                 }
                 series.setDrawDataPoints(true);
+                series.setAnimated(true);
                 series.setOnDataPointTapListener(new OnDataPointTapListener() {
                     @Override
                     public void onTap(Series series, DataPointInterface dataPoint) {
@@ -149,26 +160,32 @@ public class StatsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 ArrayList<Integer> coursePar = new ArrayList<>();
-                CoursesDO course = dbc.getCourse(comparisonAdapter.getItem(pos));
+                final CoursesDO course = dbc.getCourse(comparisonAdapter.getItem(pos));
                 final LineGraphSeries<DataPoint> parSeries = new LineGraphSeries<DataPoint>();
                 parSeries.setDrawDataPoints(true);
-                parSeries.setColor(R.color.blue);
+                parSeries.setColor(Color.BLUE);
                 parSeries.setTitle("Course Par");
+                parSeries.setAnimated(true);
+                parSeries.setBackgroundColor(Color.argb(100,0,0,205));
+                parSeries.setDrawBackground(true);
                 for(int i = 0; i < course.getPars().size(); i++){
-                    Log.d("Stats", "parSeries: " + course.getPars().get(i));
-                    parSeries.appendData(new DataPoint(i, course.getPars().get(i)), true, course.getPars().size());
+                    parSeries.appendData(new DataPoint(i+1, course.getPars().get(i)), true, 36);
                 }
+                Log.d("new issue", "par: " + parSeries.getHighestValueX());
                 final ArrayList<LineGraphSeries<DataPoint>> userSeries = new ArrayList<>();
                 for (HistoryItem item : scores){
                     if(item.getCourseName().equals(course.getName())){
                         LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
                         for(int i = 0; i < item.getScores().size(); i++){
-                            Log.d("Stats", "userSeries: " + (item.getScores().get(i) + course.getPars().get(i)));
-                            series.appendData(new DataPoint(i, item.getScores().get(i) + course.getPars().get(i)), true, item.getScores().size());
+                            series.appendData(new DataPoint(i+1, item.getScores().get(i) + course.getPars().get(i)), true, 36);
                         }
                         series.setDrawDataPoints(true);
-                        series.setColor(R.color.red);
+                        series.setColor(Color.RED);
+                        series.setAnimated(true);
+                        series.setBackgroundColor(Color.argb(100,255,99,71));
+                        series.setDrawBackground(true);
                         userSeries.add(series);
+                        Log.d("new issue", "user: " + series.getHighestValueX());
                     }
                 }
                 userSeries.get(0).setTitle("User Scores");
@@ -182,12 +199,78 @@ public class StatsActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         comparisonGraph.removeAllSeries();
-                        comparisonGraph.addSeries(parSeries);
                         for(LineGraphSeries<DataPoint> series : userSeries){
                             comparisonGraph.addSeries(series);
                         }
+                        comparisonGraph.addSeries(parSeries);
                         comparisonGraph.getLegendRenderer().setVisible(true);
                         comparisonGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+                        comparisonGraph.getViewport().setMinY(0);
+                        comparisonGraph.getViewport().setXAxisBoundsManual(true);
+                        comparisonGraph.getViewport().setMinX(1);
+                        comparisonGraph.getViewport().setMaxX(course.getPars().size());
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public void setDistPerCourse(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+                HashMap<String, Integer> count = new HashMap<>();
+                for(HistoryItem hi : scores){
+                    if (count.containsKey(hi.getCourseName())){
+                        count.put(hi.getCourseName(), count.get(hi.getCourseName()) + 1);
+                    }else{
+                        count.put(hi.getCourseName(), 1);
+                    }
+                }
+                final ArrayList<Integer> totalDist = new ArrayList<>();
+                final ArrayList<String>  names      = new ArrayList<>();
+                for(String name : count.keySet()){
+                    names.add(name);
+                    CoursesDO course = dbc.getCourse(name);
+                    int sum = 0;
+                    for(int x : course.getDistances()) sum += x;
+                    sum *= count.get(name);
+                    totalDist.add(sum);
+                }
+                for (int i = 0; i < totalDist.size(); i++){
+                    series.appendData(new DataPoint(i, totalDist.get(i)), true, 36);
+                }
+                series.setDrawDataPoints(true);
+                distPerCourse.getGridLabelRenderer().setLabelFormatter(new LabelFormatter() {
+                    @Override
+                    public String formatLabel(double value, boolean isValueX) {
+                        if (isValueX) {
+                            if(value % 1 == 0 && value >= 0 && value < names.size()) {
+                                return names.get((int) value);
+                            }else{
+                                return "";
+                            }
+                        } else {
+                            return Double.toString(value);
+                        }
+                    }
+
+                    @Override
+                    public void setViewport(Viewport viewport) {
+
+                    }
+                });
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        distPerCourse.removeAllSeries();
+                        distPerCourse.addSeries(series);
+                        distPerCourse.getViewport().setXAxisBoundsManual(true);
+                        distPerCourse.getViewport().setMinX(0);
+                        distPerCourse.getViewport().setMaxX(1);
+                        distPerCourse.getViewport().setScrollable(true);
+                        distPerCourse.getViewport().setScalable(true);
                     }
                 });
             }
@@ -215,8 +298,28 @@ public class StatsActivity extends AppCompatActivity {
         comparisonAdapter.clear();
         comparisonAdapter.addAll(itemNames);
         comparisonSpinner.setAdapter(comparisonAdapter);
-        setAvgPerHoleScore();
-        setAvgPerCourseScore();
-        setCourseComparison(0);
+        if(scores.size() > 0) {
+            setAvgPerHoleScore();
+            setAvgPerCourseScore();
+            setCourseComparison(0);
+            setDistPerCourse();
+        }else{
+            avgPerHole.removeAllSeries();
+            avgPerCourse.removeAllSeries();
+            comparisonGraph.removeAllSeries();
+            distPerCourse.removeAllSeries();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Snackbar.make(findViewById(android.R.id.content), "No data for this user...", Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        }
+                    });
+                }
+            }).start();
+        }
     }
 }
