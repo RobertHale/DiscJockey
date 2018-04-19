@@ -2,12 +2,13 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorLight">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorSecondaryDark"
         android:textAlignment="center"
         android:text="@string/find_a_course_help"
         android:layout_weight="7"/>
@@ -23,7 +24,8 @@
         android:id="@+id/user_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"></ListView>
+        android:layout_weight="20"
+        android:background="@color/colorSecondaryDark"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,13 +53,18 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
+        android:padding="5dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorPrimaryDark"
         android:text="Find A Course"
+        android:textColor="@color/colorLight"
         android:layout_weight="10"/>
 
     <ListView
         android:id="@+id/search_results"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40"></ListView>
+        android:layout_weight="40"
+        android:background="@color/colorPrimary"/>
 
 </LinearLayout>

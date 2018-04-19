@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
@@ -25,6 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="20"
         android:src="@drawable/ic_arrow_back_black_24dp"
+        android:background="@color/colorSecondary"
+        android:contentDescription="remove throw"
         app:layout_constraintStart_toEndOf="@id/hole_row_name"
         app:layout_constraintEnd_toStartOf="@id/hole_row_score"
         app:layout_constraintTop_toTopOf="parent"
@@ -52,6 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="20"
         android:src="@drawable/ic_arrow_forward_black_24dp"
+        android:background="@color/colorSecondary"
+        android:contentDescription="add throw"
         app:layout_constraintStart_toEndOf="@id/hole_row_score"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

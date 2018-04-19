@@ -8,5 +8,5 @@
     android:textSize="20sp"
     android:gravity="center_horizontal"
     android:background="@color/colorPrimaryDark"
-    android:textColor="@color/colorPrimary"
+    android:textColor="@color/colorLight"
     android:ellipsize="marquee"/>

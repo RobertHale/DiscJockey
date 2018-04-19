@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amazonaws.models.nosql.CoursesDO;
@@ -42,6 +43,9 @@ public class StatsActivity extends AppCompatActivity {
     GraphView avgPerCourse;
     GraphView comparisonGraph;
     GraphView distPerCourse;
+    TextView totalThrows;
+    TextView distanceTraveled;
+    TextView totalScore;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +57,9 @@ public class StatsActivity extends AppCompatActivity {
         avgPerCourse = (GraphView) findViewById(R.id.avg_per_course_score);
         comparisonGraph = (GraphView) findViewById(R.id.course_comparison_graph);
         distPerCourse = (GraphView) findViewById(R.id.dist_per_course_graph);
+        totalThrows = (TextView) findViewById(R.id.total_throws_number);
+        distanceTraveled = (TextView) findViewById(R.id.total_dist_number);
+        totalScore = (TextView) findViewById(R.id.total_score_number);
         Spinner spinner = (Spinner) findViewById(R.id.stats_spinner);
         comparisonSpinner = (Spinner) findViewById(R.id.comparison_spinner);
         comparisonAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.user_spinner_item);
@@ -159,7 +166,6 @@ public class StatsActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ArrayList<Integer> coursePar = new ArrayList<>();
                 final CoursesDO course = dbc.getCourse(comparisonAdapter.getItem(pos));
                 final LineGraphSeries<DataPoint> parSeries = new LineGraphSeries<DataPoint>();
                 parSeries.setDrawDataPoints(true);
@@ -177,7 +183,7 @@ public class StatsActivity extends AppCompatActivity {
                     if(item.getCourseName().equals(course.getName())){
                         LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
                         for(int i = 0; i < item.getScores().size(); i++){
-                            series.appendData(new DataPoint(i+1, item.getScores().get(i) + course.getPars().get(i)), true, 36);
+                            series.appendData(new DataPoint(i+1, item.getScore(i) + course.getPars().get(i)), true, 36);
                         }
                         series.setDrawDataPoints(true);
                         series.setColor(Color.RED);
@@ -269,8 +275,40 @@ public class StatsActivity extends AppCompatActivity {
                         distPerCourse.getViewport().setXAxisBoundsManual(true);
                         distPerCourse.getViewport().setMinX(0);
                         distPerCourse.getViewport().setMaxX(1);
+                        distPerCourse.getViewport().setMinY(0);
                         distPerCourse.getViewport().setScrollable(true);
                         distPerCourse.getViewport().setScalable(true);
+                    }
+                });
+            }
+        }).start();
+    }
+
+    public void setNumberStats(){
+        int throwSum = 0;
+        int distSum = 0;
+        int scoreSum = 0;
+        for(HistoryItem hi : scores){
+            CoursesDO course = dbc.getCourse(hi.getCourseName());
+            for (int i = 0; i < course.getPars().size(); i++){
+                throwSum += course.getPars().get(i) + hi.getScore(i);
+                distSum += course.getDistances().get(i);
+                scoreSum += hi.getScore(i);
+            }
+        }
+        final int totalThrow = throwSum;
+        final int totalDist = distSum / 5280;//convert from feet to miles
+        final int totalScores = scoreSum;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("stats", "run: added score");
+                        totalThrows.setText(String.valueOf(totalThrow));
+                        distanceTraveled.setText(String.valueOf(totalDist));
+                        totalScore.setText(String.valueOf(totalScores));
                     }
                 });
             }
@@ -303,6 +341,7 @@ public class StatsActivity extends AppCompatActivity {
             setAvgPerCourseScore();
             setCourseComparison(0);
             setDistPerCourse();
+            setNumberStats();
         }else{
             avgPerHole.removeAllSeries();
             avgPerCourse.removeAllSeries();
@@ -314,6 +353,9 @@ public class StatsActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            totalThrows.setText(String.valueOf(0));
+                            distanceTraveled.setText(String.valueOf(0));
+                            totalScore.setText(String.valueOf(0));
                             Snackbar.make(findViewById(android.R.id.content), "No data for this user...", Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }

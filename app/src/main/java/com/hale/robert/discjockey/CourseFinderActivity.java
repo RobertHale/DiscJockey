@@ -89,8 +89,7 @@ public class CourseFinderActivity extends AppCompatActivity implements JsoupFetc
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 SearchResultCourse course = (SearchResultCourse) adapterView.getItemAtPosition(i);
                 if(clickedUsers.size() > 0) {
-                    Snackbar.make(view, "Sit back as we create your scorecard", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
+                    showSnack("Sit back as we create your scorecard");
                     clikcedCourse = course;
                     new CourseCreator(CourseFinderActivity.this, course.getUrl().toString());
                 }else{

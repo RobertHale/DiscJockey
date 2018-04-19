@@ -8,7 +8,8 @@
     android:gravity="center_horizontal"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.hale.robert.discjockey.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:showIn="@layout/app_bar_main"
+    android:background="@color/colorLight">
 
 
     <TextView
@@ -18,7 +19,7 @@
         android:text="@string/welcome_text"
         android:textAlignment="center"
         android:fontFamily="serif"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorSecondaryDark"
         android:layout_weight="10"/>
 
     <TextView
@@ -32,7 +33,8 @@
         android:id="@+id/main_users"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="60"/>
+        android:layout_weight="60"
+        android:background="@color/colorSecondaryDark" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -81,6 +83,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create ScoreCard"
-        android:layout_weight="2"/>
+        android:layout_weight="2"
+        android:padding="5dp"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorLight"/>
 
 </LinearLayout>

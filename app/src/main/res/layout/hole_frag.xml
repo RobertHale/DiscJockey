@@ -15,7 +15,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/hole_list"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_chainStyle="spread"
         app:layout_constraintVertical_weight="20">
 
@@ -24,7 +23,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="HOLE"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorSecondary"
             android:textSize="25dp"/>
 
         <TextView
@@ -32,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="#"
-            android:textColor="@color/white"
+            android:textColor="@color/colorLight"
             android:textAlignment="center"
             android:textSize="50dp"/>
     </LinearLayout>
@@ -41,6 +40,7 @@
         android:id="@+id/par"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="10dp"
         android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toStartOf="@id/hole"
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="PAR"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorSecondary"
             android:textSize="25dp"/>
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="#"
-            android:textColor="@color/white"
+            android:textColor="@color/colorLight"
             android:textAlignment="center"
             android:textSize="50dp"/>
     </LinearLayout>
@@ -71,6 +71,7 @@
         android:id="@+id/distance"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="10dp"
         android:orientation="vertical"
         android:background="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +86,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="DIST"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorSecondary"
             android:textSize="25dp"/>
 
         <TextView
@@ -93,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="#"
-            android:textColor="@color/white"
+            android:textColor="@color/colorLight"
             android:textAlignment="center"
             android:textSize="50dp"/>
     </LinearLayout>
