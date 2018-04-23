@@ -175,9 +175,10 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(MainActivity.this, StatsActivity.class);
             intent.putStringArrayListExtra("users", users);
             startActivityForResult(intent, 501);
-        } else if (id == R.id.nav_share) {
-
         } else if (id == R.id.nav_friends) {
+            Intent intent = new Intent(MainActivity.this, LeaderBoardActivity.class);
+            startActivityForResult(intent, 503);
+        } else if (id == R.id.nav_share) {
 
         }
 

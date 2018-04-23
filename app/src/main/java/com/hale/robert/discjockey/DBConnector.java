@@ -82,4 +82,9 @@ public class DBConnector {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
         return dynamoDBMapper.scan(UsersDO.class, scanExpression);
     }
+
+    public List<CoursesDO> getAllCourses(){
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+        return dynamoDBMapper.scan(CoursesDO.class, scanExpression);
+    }
 }
