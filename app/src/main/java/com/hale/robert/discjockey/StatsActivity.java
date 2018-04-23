@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.SparseIntArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,6 +45,7 @@ public class StatsActivity extends AppCompatActivity {
     TextView totalThrows;
     TextView distanceTraveled;
     TextView totalScore;
+    StatComputer sc;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +68,7 @@ public class StatsActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(R.layout.user_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         dbc = new DBConnector();
+        sc = new StatComputer(dbc);
         avgPerHole.setTitle("Average score per hole compared to par");
         avgPerCourse.setTitle("Average score per course compared to par");
         comparisonGraph.setTitle("Score per hole compared to par");
@@ -102,15 +103,7 @@ public class StatsActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SparseIntArray relScores = new SparseIntArray();
-                for(HistoryItem item : scores){
-                        relScores.put(item.getTotalScore(), relScores.get(item.getTotalScore()) + 1);
-                }
-                final BarGraphSeries<DataPoint> series = new BarGraphSeries<>();
-                for (int i = 0; i < relScores.size(); i++){
-                    series.appendData(new DataPoint(relScores.keyAt(i), relScores.valueAt(i)), true, 36);
-                }
-                series.setSpacing(15);
+                final BarGraphSeries<DataPoint> series = sc.computeAveragePerCourse();
                 series.setOnDataPointTapListener(new OnDataPointTapListener() {
                     @Override
                     public void onTap(Series series, DataPointInterface dataPoint) {
@@ -133,18 +126,7 @@ public class StatsActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SparseIntArray relScores = new SparseIntArray();
-                for(HistoryItem item : scores){
-                    for(int score : item.getScores()){
-                        relScores.put(score, relScores.get(score) + 1);
-                    }
-                }
-                final LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>();
-                for (int i = 0; i < relScores.size(); i++){
-                    series.appendData(new DataPoint(relScores.keyAt(i), relScores.valueAt(i)), true, 36);
-                }
-                series.setDrawDataPoints(true);
-                series.setAnimated(true);
+                final LineGraphSeries<DataPoint> series = sc.computeAveragePerHole();
                 series.setOnDataPointTapListener(new OnDataPointTapListener() {
                     @Override
                     public void onTap(Series series, DataPointInterface dataPoint) {
@@ -166,36 +148,8 @@ public class StatsActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final CoursesDO course = dbc.getCourse(comparisonAdapter.getItem(pos));
-                final LineGraphSeries<DataPoint> parSeries = new LineGraphSeries<DataPoint>();
-                parSeries.setDrawDataPoints(true);
-                parSeries.setColor(Color.BLUE);
-                parSeries.setTitle("Course Par");
-                parSeries.setAnimated(true);
-                parSeries.setBackgroundColor(Color.argb(100,0,0,205));
-                parSeries.setDrawBackground(true);
-                for(int i = 0; i < course.getPars().size(); i++){
-                    parSeries.appendData(new DataPoint(i+1, course.getPars().get(i)), true, 36);
-                }
-                Log.d("new issue", "par: " + parSeries.getHighestValueX());
-                final ArrayList<LineGraphSeries<DataPoint>> userSeries = new ArrayList<>();
-                for (HistoryItem item : scores){
-                    if(item.getCourseName().equals(course.getName())){
-                        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
-                        for(int i = 0; i < item.getScores().size(); i++){
-                            series.appendData(new DataPoint(i+1, item.getScore(i) + course.getPars().get(i)), true, 36);
-                        }
-                        series.setDrawDataPoints(true);
-                        series.setColor(Color.RED);
-                        series.setAnimated(true);
-                        series.setBackgroundColor(Color.argb(100,255,99,71));
-                        series.setDrawBackground(true);
-                        userSeries.add(series);
-                        Log.d("new issue", "user: " + series.getHighestValueX());
-                    }
-                }
-                userSeries.get(0).setTitle("User Scores");
-                parSeries.setOnDataPointTapListener(new OnDataPointTapListener() {
+                final ArrayList<LineGraphSeries<DataPoint>> seriesList = sc.computeComparison(comparisonAdapter.getItem(pos));
+                seriesList.get(0).setOnDataPointTapListener(new OnDataPointTapListener() {
                     @Override
                     public void onTap(Series series, DataPointInterface dataPoint) {
                         Toast.makeText(getApplicationContext(), "Hole: " + dataPoint.getX() + "\nPar: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
@@ -205,16 +159,16 @@ public class StatsActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         comparisonGraph.removeAllSeries();
-                        for(LineGraphSeries<DataPoint> series : userSeries){
-                            comparisonGraph.addSeries(series);
+                        for(int i = 1; i < seriesList.size(); i++){
+                            comparisonGraph.addSeries(seriesList.get(i));
                         }
-                        comparisonGraph.addSeries(parSeries);
+                        comparisonGraph.addSeries(seriesList.get(0));
                         comparisonGraph.getLegendRenderer().setVisible(true);
                         comparisonGraph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
                         comparisonGraph.getViewport().setMinY(0);
                         comparisonGraph.getViewport().setXAxisBoundsManual(true);
                         comparisonGraph.getViewport().setMinX(1);
-                        comparisonGraph.getViewport().setMaxX(course.getPars().size());
+                        comparisonGraph.getViewport().setMaxX(seriesList.get(0).getHighestValueX());
                     }
                 });
             }
@@ -225,29 +179,8 @@ public class StatsActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
-                HashMap<String, Integer> count = new HashMap<>();
-                for(HistoryItem hi : scores){
-                    if (count.containsKey(hi.getCourseName())){
-                        count.put(hi.getCourseName(), count.get(hi.getCourseName()) + 1);
-                    }else{
-                        count.put(hi.getCourseName(), 1);
-                    }
-                }
-                final ArrayList<Integer> totalDist = new ArrayList<>();
-                final ArrayList<String>  names      = new ArrayList<>();
-                for(String name : count.keySet()){
-                    names.add(name);
-                    CoursesDO course = dbc.getCourse(name);
-                    int sum = 0;
-                    for(int x : course.getDistances()) sum += x;
-                    sum *= count.get(name);
-                    totalDist.add(sum);
-                }
-                for (int i = 0; i < totalDist.size(); i++){
-                    series.appendData(new DataPoint(i, totalDist.get(i)), true, 36);
-                }
-                series.setDrawDataPoints(true);
+                final LineGraphSeries<DataPoint> series = sc.computeDistPerCourse();
+                final ArrayList<String> names = sc.getNames();
                 distPerCourse.getGridLabelRenderer().setLabelFormatter(new LabelFormatter() {
                     @Override
                     public String formatLabel(double value, boolean isValueX) {
@@ -285,30 +218,17 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     public void setNumberStats(){
-        int throwSum = 0;
-        int distSum = 0;
-        int scoreSum = 0;
-        for(HistoryItem hi : scores){
-            CoursesDO course = dbc.getCourse(hi.getCourseName());
-            for (int i = 0; i < course.getPars().size(); i++){
-                throwSum += course.getPars().get(i) + hi.getScore(i);
-                distSum += course.getDistances().get(i);
-                scoreSum += hi.getScore(i);
-            }
-        }
-        final int totalThrow = throwSum;
-        final int totalDist = distSum / 5280;//convert from feet to miles
-        final int totalScores = scoreSum;
         new Thread(new Runnable() {
             @Override
             public void run() {
+                final int[] stats = sc.computeNumberStats();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Log.d("stats", "run: added score");
-                        totalThrows.setText(String.valueOf(totalThrow));
-                        distanceTraveled.setText(String.valueOf(totalDist));
-                        totalScore.setText(String.valueOf(totalScores));
+                        totalThrows.setText(String.valueOf(stats[0]));
+                        distanceTraveled.setText(String.valueOf(stats[1]));
+                        totalScore.setText(String.valueOf(stats[2]));
                     }
                 });
             }
@@ -323,9 +243,31 @@ public class StatsActivity extends AppCompatActivity {
                 scores.add(new HistoryItem(course, score));
             }
         }
+        sc.setScores(scores);
+    }
+
+    public void clearValues(){
+        avgPerHole.removeAllSeries();
+        avgPerCourse.removeAllSeries();
+        comparisonGraph.removeAllSeries();
+        distPerCourse.removeAllSeries();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        totalThrows.setText(String.valueOf("-"));
+                        distanceTraveled.setText(String.valueOf("-"));
+                        totalScore.setText(String.valueOf("-"));
+                    }
+                });
+            }
+        }).start();
     }
 
     public void switchUsers(int pos){
+        clearValues();
         setHistory(users.get(pos));
         ArrayList<String> itemNames = new ArrayList<>();
         for (int i = 0; i < scores.size(); i++) {
@@ -343,23 +285,17 @@ public class StatsActivity extends AppCompatActivity {
             setDistPerCourse();
             setNumberStats();
         }else{
-            avgPerHole.removeAllSeries();
-            avgPerCourse.removeAllSeries();
-            comparisonGraph.removeAllSeries();
-            distPerCourse.removeAllSeries();
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            totalThrows.setText(String.valueOf(0));
-                            distanceTraveled.setText(String.valueOf(0));
-                            totalScore.setText(String.valueOf(0));
-                            Snackbar.make(findViewById(android.R.id.content), "No data for this user...", Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                        }
-                    });
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Snackbar.make(findViewById(android.R.id.content),
+                        "No data for this user...", Snackbar.LENGTH_LONG)
+                                .setAction("Action", null).show();
+                    }
+                });
                 }
             }).start();
         }
