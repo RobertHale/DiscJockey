@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/colorLight">
+    android:background="@color/colorLight"
+    android:id="@+id/history_layout">
 
     <Spinner
         android:id="@+id/user_spinner"

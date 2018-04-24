@@ -3,6 +3,7 @@ package com.hale.robert.discjockey;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -50,6 +51,21 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+        historyList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("history", "onItemClick: adding frag");
+                HistoryItem hi = historyAdapter.getItem(position);
+                assert hi != null;
+                ArrayList<Integer> pars = (ArrayList<Integer>) dbc.getCourse(hi.getCourseName()).getPars();
+                Intent intent = new Intent(HistoryActivity.this, HistoryRecordActivity.class);
+                Bundle b = new Bundle();
+                b.putIntegerArrayList("pars", pars);
+                b.putIntegerArrayList("scores", (ArrayList<Integer>) hi.getScores());
+                intent.putExtras(b);
+                startActivity(intent);
             }
         });
     }
