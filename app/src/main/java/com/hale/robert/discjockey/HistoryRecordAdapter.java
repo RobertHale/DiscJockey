@@ -3,6 +3,7 @@ package com.hale.robert.discjockey;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,11 +44,11 @@ public class HistoryRecordAdapter extends ArrayAdapter<ArrayList<Integer>> {
         score.setText(String.valueOf(data.get(0)));
         par.setText(String.valueOf(data.get(1)));
         if (data.get(0) < 0){
-            score.setBackgroundColor(Color.GREEN);
+            score.setBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), R.color.green, null));
         }else if (data.get(0) > 0){
-            score.setBackgroundColor(Color.RED);
+            score.setBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), R.color.red, null));
         }else{
-            score.setBackgroundColor(Color.BLUE);
+            score.setBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), R.color.blue, null));
         }
         return theView;
     }

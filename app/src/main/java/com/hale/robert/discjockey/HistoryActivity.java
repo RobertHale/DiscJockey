@@ -3,6 +3,7 @@ package com.hale.robert.discjockey;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -68,6 +69,7 @@ public class HistoryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Snackbar.make(findViewById(android.R.id.content), "Click on a history item for a more detailed view", Snackbar.LENGTH_LONG).show();
     }
 
     public ArrayList<HistoryItem> getHistory(String name){

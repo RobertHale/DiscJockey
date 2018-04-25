@@ -2,6 +2,7 @@ package com.hale.robert.discjockey;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
@@ -22,6 +23,7 @@ public class HistoryRecordActivity extends AppCompatActivity{
         HistoryRecordAdapter historyRecordAdapter = new HistoryRecordAdapter(getApplicationContext());
         historyRecordAdapter.addAll(record);
         recordList.setAdapter(historyRecordAdapter);
+        Snackbar.make(findViewById(android.R.id.content), "Green = good, Red = bad, Blue = meh", Snackbar.LENGTH_LONG).show();
     }
 
     private ArrayList<ArrayList<Integer>> fuzeData(ArrayList<Integer> pars, ArrayList<Integer> scores) {
