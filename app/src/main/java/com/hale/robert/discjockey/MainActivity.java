@@ -78,6 +78,14 @@ public class MainActivity extends AppCompatActivity
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (numHoles.getText().length() == 0){
+                    showSnack("Please specify number of holes");
+                    return;
+                }
+                if (courseName.getText().toString().equals("")){
+                    showSnack("please give a course name");
+                    return;
+                }
                 if (clickedUsers.size() > 0) {
                     int holeCount = Integer.parseInt(numHoles.getText().toString());
                     String course = courseName.getText().toString();
