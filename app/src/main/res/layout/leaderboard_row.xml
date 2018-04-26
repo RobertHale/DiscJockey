@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
+    android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     
     <TextView
@@ -9,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="#"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/rounded_corner_primary_dark"
         android:textColor="@color/colorSecondary"
         android:textSize="50sp"
         android:gravity="center"
@@ -23,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="name"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/rounded_corners_left_side"
         android:textColor="@color/colorSecondary"
         android:textSize="20sp"
         android:gravity="center"
@@ -39,7 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="#"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/rounded_corners_right_side"
         android:textColor="@color/colorSecondary"
         android:textSize="50sp"
         android:gravity="center"

@@ -39,13 +39,13 @@ public class LeaderBoardAdapter extends ArrayAdapter<HistoryItem> {
         name.setText(data.getUserName());
         score.setText(String.valueOf(data.getTotalScore()));
         if (position == 0){
-            rank.setBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), R.color.gold, null));
+            rank.setBackground(ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.rounded_corner_gold, null));
         }else if (position == 1){
-            rank.setBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), R.color.silver, null));
+            rank.setBackground(ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.rounded_corner_silver, null));
         }else if (position == 2){
-            rank.setBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), R.color.bronze, null));
+            rank.setBackground(ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.rounded_corner_bronze, null));
         }else{
-            rank.setBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), R.color.colorPrimaryDark, null));
+            rank.setBackground(ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.rounded_corner_primary_dark, null));
         }
         return theView;
     }
