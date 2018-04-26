@@ -1,11 +1,14 @@
 package com.hale.robert.discjockey;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
-class HistoryItem {
+class HistoryItem implements Comparable<HistoryItem>{
     private String courseName;
     private List<Integer> scores;
+    private String userName;
 
     public HistoryItem(){
 
@@ -13,6 +16,12 @@ class HistoryItem {
     public HistoryItem(String courseName, List<Integer> scores){
         this.courseName = courseName;
         this.scores = scores;
+    }
+
+    public HistoryItem(String courseName, List<Integer> scores, String userName){
+        this.courseName = courseName;
+        this.scores = scores;
+        this.userName = userName;
     }
 
     public String getCourseName() {
@@ -41,10 +50,19 @@ class HistoryItem {
 
     @Override
     public String toString() {
-        return this.getCourseName();
+        return this.userName + " " + this.getTotalScore() + " " + this.getCourseName();
     }
 
-    public void setScores(List<Integer> scores) {
-        this.scores = scores;
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    @Override
+    public int compareTo(@NonNull HistoryItem o) {
+        return this.getTotalScore() - o.getTotalScore();
     }
 }

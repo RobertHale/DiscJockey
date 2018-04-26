@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    <TextView
+        android:id="@+id/leader_rank"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="#"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorSecondary"
+        android:textSize="50sp"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/leader_name"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    <TextView
+        android:id="@+id/leader_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="name"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorSecondary"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toEndOf="@id/leader_rank"
+        app:layout_constraintEnd_toStartOf="@id/leader_score"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/leader_score"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="#"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorSecondary"
+        android:textSize="50sp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintStart_toEndOf="@id/leader_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>
