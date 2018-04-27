@@ -30,9 +30,9 @@ public class HistoryActivity extends AppCompatActivity {
         Intent caller = getIntent();
         users = caller.getStringArrayListExtra("users");
         final ListView historyList = findViewById(R.id.history_list);
-        Spinner spinner = (Spinner) findViewById(R.id.user_spinner);
+        final Spinner spinner = (Spinner) findViewById(R.id.user_spinner);
         Log.d("history", "onCreate: " + users);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.user_spinner_item, users);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.user_spinner_item, users);
         adapter.setDropDownViewResource(R.layout.user_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         dbc = new DBConnector();
@@ -65,6 +65,8 @@ public class HistoryActivity extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putIntegerArrayList("pars", pars);
                 b.putIntegerArrayList("scores", (ArrayList<Integer>) hi.getScores());
+                b.putString("courseName", hi.getCourseName());
+                b.putString("userName", adapter.getItem(position));
                 intent.putExtras(b);
                 startActivity(intent);
             }
