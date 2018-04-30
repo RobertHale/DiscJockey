@@ -82,7 +82,7 @@ public class HistoryRecordActivity extends AppCompatActivity{
                 .append(userName)
                 .append("'s scorecard for ")
                 .append(courseName)
-                .append(" !\n")
+                .append("!\n")
                 .append(scores)
                 .append("\nFor a total score of: ");
         int sum = 0;

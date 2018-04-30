@@ -66,7 +66,7 @@ public class HistoryActivity extends AppCompatActivity {
                 b.putIntegerArrayList("pars", pars);
                 b.putIntegerArrayList("scores", (ArrayList<Integer>) hi.getScores());
                 b.putString("courseName", hi.getCourseName());
-                b.putString("userName", adapter.getItem(position));
+                b.putString("userName", hi.getUserName());
                 intent.putExtras(b);
                 startActivity(intent);
             }
@@ -79,7 +79,7 @@ public class HistoryActivity extends AppCompatActivity {
         ArrayList<HistoryItem> items = new ArrayList<>();
         for(String course : user.getScorecards().keySet()){
             for(List<Integer> scores : user.getScorecards().get(course)){
-                items.add(new HistoryItem(course, scores));
+                items.add(new HistoryItem(course, scores, user.getName()));
             }
         }
         return items;

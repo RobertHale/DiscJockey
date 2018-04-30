@@ -16,6 +16,7 @@ class HistoryItem implements Comparable<HistoryItem>{
     public HistoryItem(String courseName, List<Integer> scores){
         this.courseName = courseName;
         this.scores = scores;
+        this.userName = "";
     }
 
     public HistoryItem(String courseName, List<Integer> scores, String userName){

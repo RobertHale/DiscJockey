@@ -1,8 +1,10 @@
 package com.hale.robert.discjockey;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -70,6 +72,24 @@ public class LeaderBoardActivity extends AppCompatActivity {
 
             }
         });
+        theBoard.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.d("history", "onItemClick: adding frag");
+                HistoryItem hi = boardAdapter.getItem(position);
+                assert hi != null;
+                ArrayList<Integer> pars = (ArrayList<Integer>) dbc.getCourse(hi.getCourseName()).getPars();
+                Intent intent = new Intent(LeaderBoardActivity.this, HistoryRecordActivity.class);
+                Bundle b = new Bundle();
+                b.putIntegerArrayList("pars", pars);
+                b.putIntegerArrayList("scores", (ArrayList<Integer>) hi.getScores());
+                b.putString("courseName", hi.getCourseName());
+                b.putString("userName", hi.getUserName());
+                intent.putExtras(b);
+                startActivity(intent);
+            }
+        });
+        Snackbar.make(findViewById(android.R.id.content), "Click on a score for a more detailed view", Snackbar.LENGTH_LONG).show();
     }
 
     private void setLeaders(final String s) {

@@ -8,16 +8,18 @@
         android:id="@+id/history_record_hole"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/rounded_corner_primary_dark"
         android:layout_margin="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/history_record_score"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
         <TextView
             android:id="@+id/history_record_hole_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="25sp"
             android:text="#"
             android:textColor="@color/colorLight"/>
     </LinearLayout>
@@ -26,36 +28,42 @@
         android:id="@+id/history_record_score"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/rounded_corner_primary_dark"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toEndOf="@id/history_record_hole"
         app:layout_constraintEnd_toStartOf="@id/history_record_par"
-        app:layout_constraintTop_toTopOf="@id/history_record_hole"
-        app:layout_constraintBottom_toBottomOf="@id/history_record_hole">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
         <TextView
             android:id="@+id/history_record_score_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="25sp"
             android:text="#"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorLight"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/history_record_par"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/colorPrimaryDark"
+        android:background="@drawable/rounded_corner_primary_dark"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toEndOf="@id/history_record_score"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/history_record_hole"
-        app:layout_constraintBottom_toBottomOf="@id/history_record_hole">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
         <TextView
             android:id="@+id/history_record_par_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="25sp"
             android:text="#"
             android:textColor="@color/colorLight"/>
     </LinearLayout>

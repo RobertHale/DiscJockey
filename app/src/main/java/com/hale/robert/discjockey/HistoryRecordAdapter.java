@@ -44,11 +44,11 @@ public class HistoryRecordAdapter extends ArrayAdapter<ArrayList<Integer>> {
         score.setText(String.valueOf(data.get(0)));
         par.setText(String.valueOf(data.get(1)));
         if (data.get(0) < 0){
-            score.setBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), R.color.green, null));
+            score.setBackground(ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.rounded_corner_green, null));
         }else if (data.get(0) > 0){
-            score.setBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), R.color.red, null));
+            score.setBackground(ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.rounded_corner_red, null));
         }else{
-            score.setBackgroundColor(ResourcesCompat.getColor(getContext().getResources(), R.color.blue, null));
+            score.setBackground(ResourcesCompat.getDrawable(getContext().getResources(), R.drawable.rounded_corner_blue, null));
         }
         return theView;
     }
