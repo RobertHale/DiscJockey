@@ -33,6 +33,15 @@ public class DBConnector {
         }).start();
     }
 
+    public void removeUser(final UsersDO user){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                dynamoDBMapper.delete(user);
+            }
+        }).start();
+    }
+
     public UsersDO getItem(final String name) {
         final UsersDO users[] = new UsersDO[1];
         Runnable runnable = new Runnable() {

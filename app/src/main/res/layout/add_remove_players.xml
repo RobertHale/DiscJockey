@@ -7,7 +7,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_remove_help"
+        android:text="@string/add_help"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"/>
     <LinearLayout
@@ -36,6 +36,42 @@
         android:background="@color/colorPrimaryDark"
         android:padding="5dp"
         android:text="Add Player"
+        android:textColor="@color/colorLight"
+        android:shadowColor="@color/colorPrimaryDark"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_help"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginTop="10dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Name: "
+            android:gravity="center_vertical"
+            android:textColor="@color/colorPrimaryDark"/>
+        <EditText
+            android:id="@+id/remove_player_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="text" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/remove_player_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimaryDark"
+        android:padding="5dp"
+        android:text="remove Player"
         android:textColor="@color/colorLight"
         android:shadowColor="@color/colorPrimaryDark"/>
 </LinearLayout>

@@ -4,7 +4,8 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="find_a_course_help">Let\'s find your course! Select users and enter name of course to get started</string>
-    <string name="add_remove_help">To add a player, enter name below then hit enter.  To remove a player, contact the creator of this app and ask for removal of said player.</string>
+    <string name="add_help">To add a player, enter name below then hit add button.</string>
+    <string name="remove_help">To remove a player, enter name below the hit remove button.  Note: this action cannot be undone.</string>
     <string name="action_settings">Settings</string>
     <string name="stats_header">STATS:</string>
     <string name="creator_name">Robert Hale</string>

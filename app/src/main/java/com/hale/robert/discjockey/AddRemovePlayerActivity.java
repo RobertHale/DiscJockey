@@ -20,13 +20,15 @@ public class AddRemovePlayerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_remove_players);
-        final EditText newPlayer = (EditText) findViewById(R.id.add_player_text);
+        final EditText addPlayer = (EditText) findViewById(R.id.add_player_text);
+        final EditText removePlayer = (EditText) findViewById(R.id.remove_player_text);
         final Button addButton = (Button) findViewById(R.id.add_player_button);
+        final Button removeButton = (Button) findViewById(R.id.remove_player_button);
         final DBConnector dbc = new DBConnector();
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = newPlayer.getText().toString();
+                String name = addPlayer.getText().toString();
                 if(dbc.getItem(name) == null){
                     UsersDO newUser = new UsersDO();
                     newUser.setName(name);
@@ -35,6 +37,19 @@ public class AddRemovePlayerActivity extends AppCompatActivity {
                     showSnack("User Added!");
                 }else{
                     showSnack("User already exists");
+                }
+            }
+        });
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name = removePlayer.getText().toString();
+                UsersDO user;
+                if ((user = dbc.getItem(name)) != null){
+                    dbc.removeUser(user);
+                    showSnack(name + " deleted");
+                }else{
+                    showSnack("User does not exist");
                 }
             }
         });
