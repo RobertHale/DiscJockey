@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLight"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/creator_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/creator_name"
+        android:textStyle="bold"
+        android:textSize="48sp"
+        android:textColor="@color/colorSecondaryDark"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/profile_pic"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/ic_person_outline_black_24dp"
+        android:padding="10dp"
+        app:layout_constraintStart_toEndOf="@id/overview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/overview"
+        app:layout_constraintBottom_toBottomOf="@id/overview"/>
+
+    <TextView
+        android:id="@+id/overview"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/about"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="10dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/creator_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/profile_pic"/>
+    
+    <TextView
+        android:id="@+id/github"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:text="@string/github_link"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/overview"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/linkedin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:text="@string/linkdin_link"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/github"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:text="@string/facebook_link"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/linkedin"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="email"
+        android:text="@string/email_link"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/facebook"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+</android.support.constraint.ConstraintLayout>

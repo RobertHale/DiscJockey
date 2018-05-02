@@ -7,4 +7,10 @@
     <string name="add_remove_help">To add a player, enter name below then hit enter.  To remove a player, contact the creator of this app and ask for removal of said player.</string>
     <string name="action_settings">Settings</string>
     <string name="stats_header">STATS:</string>
+    <string name="creator_name">Robert Hale</string>
+    <string name="about">I am a Junior in the major of CS at UT at Austin.\nThis is my first semester coding for andorid.\nI interned last summer at IGT to create a unit test framework.\nThis summer I am going to be interning at Epic to create a new iOS app for the apple TV.</string>
+    <string name="github_link">You can find my github here:\n<a href="https://github.com/RobertHale">https://github.com/RobertHale</a></string>
+    <string name="linkdin_link">You can find my Linkedin here:\n<a href="https://www.linkedin.com/in/robert-hale-717261106/">https://www.linkedin.com/in/robert-hale-717261106/</a></string>
+    <string name="facebook_link">Follow me on facebook:\n<a href="https://www.facebook.com/robby.hale.92">https://www.facebook.com/robby.hale.92</a></string>
+    <string name="email_link">For an questions, comments, or concerns email me here:\n<a href="mailto:rthspike@gmail.com?Subject=DJFeedback">rthspike@gmail.com</a></string>
 </resources>
